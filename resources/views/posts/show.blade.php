@@ -1,7 +1,14 @@
 @extends('layouts.app')
 
+@section('title', $post->title)
+
 @section('content')
     <div class="max-w-3xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <article class="bg-white shadow-lg rounded-lg overflow-hidden">
             <div class="p-6 sm:p-8">
                 <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ $post->title }}</h1>
@@ -30,7 +37,8 @@
                     <form action="{{ route('post.destroy', $post) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button class="bg-red-100 text-red-500 text-xs font-semibold mr-2 rounded py-3 px-4" >Eliminar Post</button>
+                        <button class="bg-red-100 text-red-500 text-xs font-semibold mr-2 rounded py-3 px-4">Eliminar
+                            Post</button>
                     </form>
 
                 </div>

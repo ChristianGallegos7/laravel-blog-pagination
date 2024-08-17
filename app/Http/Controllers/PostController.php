@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Mail\PostCreateMail;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
@@ -24,22 +27,31 @@ class PostController extends Controller
         return view('posts.show', compact('post'));
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        Post::create($request->all());
-        return redirect()->route('posts.index');
+        $post = Post::create($request->all());
+
+        Mail::to('prueba@prueba.com')->send(new PostCreateMail($post));
+        return redirect()->route('post.index');
     }
 
     public function edit(Post $post)
     {
-
         return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
     {
-        $post->update($request->all());
-        return redirect("/posts/$post");
+        $validatedData = $request->validate([
+            'title' => 'required|min:5|max:100',
+            'slug' => ['required', "unique:posts,slug,$post->id"],
+            'content' => 'required',
+            'category' => 'required',
+        ]);
+
+        $post->update($validatedData);
+
+        return redirect()->route('post.show', $post)->with('success', 'Post actualizado exitosamente.');
     }
 
     public function destroy(Post $post)
