@@ -4,7 +4,7 @@
 @section('content')
 <div class="max-w-md mx-auto mt-10">
     <h2 class="font-bold text-center text-2xl">Editar Post</h2>
-    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{ route('post.update', $post->id) }}">
+    <form method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{ route('post.update', $post) }}">
       @csrf
       @method('PUT')
       <div class="mb-4">

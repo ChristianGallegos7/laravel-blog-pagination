@@ -21,13 +21,13 @@
 
                 <div class="mt-6 flex gap-4">
 
-                    <a href="{{ route('post.edit', $post->id) }}"
+                    <a href="{{ route('post.edit', $post) }}"
                         class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded
                           focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
                         Editar
                     </a>
 
-                    <form action="{{ route('post.destroy', $post->id) }}" method="POST">
+                    <form action="{{ route('post.destroy', $post) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="bg-red-100 text-red-500 text-xs font-semibold mr-2 rounded py-3 px-4" >Eliminar Post</button>
